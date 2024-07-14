@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une Photo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="file"] {
+            display: block;
+            margin-top: 5px;
+        }
+        .form-group textarea {
+            width: 100%;
+            height: 80px;
+            resize: none;
+        }
+        .form-group button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .image-preview {
+            margin-top: 20px;
+        }
+        .image-preview img {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Ajouter une Photo</h2>
+    <form id="uploadForm" enctype="multipart/form-data" action="/upload" method="POST">
+        <div class="form-group">
+            <label for="photoTitle">Titre de la Photo:</label>
+            <input type="text" id="photoTitle" name="photoTitle" required>
+        </div>
+        <div class="form-group">
+            <label for="photoDescription">Description:</label>
+            <textarea id="photoDescription" name="photoDescription" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="photoFile">Sélectionnez une Photo:</label>
+            <input type="file" id="photoFile" name="photoFile" required accept="image/*">
+        </div>
+        <div class="form-group">
+            <button type="submit">Ajouter la Photo</button>
+        </div>
+    </form>
+
+    <div class="image-preview" id="imagePreview">
+        <!-- L'image ajoutée apparaîtra ici -->
+    </div>
+
+    <script>
+        // Afficher l'aperçu de l'image après sélection
+        document.getElementById("photoFile").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                const imgElement = document.createElement("img");
+                imgElement.src = reader.result;
+                document.getElementById("imagePreview").innerHTML = "";
+                document.getElementById("imagePreview").appendChild(imgElement);
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>

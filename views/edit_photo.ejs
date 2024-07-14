@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter ou Modifier une Photo</title>
+    <link rel="stylesheet" href="/path/to/your/css/styles.css">
+</head>
+<body>
+    <h1><%= photo ? 'Modifier' : 'Ajouter' %> une Photo</h1>
+    <form action="<%= photo ? '/photos/' + photo._id + '?_method=PUT' : '/photos' %>" method="POST" enctype="multipart/form-data">
+        <div>
+            <label for="title">Titre:</label>
+            <input type="text" id="title" name="title" value="<%= photo ? photo.title : '' %>" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required><%= photo ? photo.description : '' %></textarea>
+        </div>
+        <div>
+            <label for="photo">Photo:</label>
+            <input type="file" id="photo" name="photo" <%= photo ? '' : 'required' %>>
+            <% if (photo) { %>
+                <p>Image actuelle: <img src="/uploads/<%= photo.filename %>" alt="<%= photo.title %>" width="100"></p>
+            <% } %>
+        </div>
+        <div>
+            <button type="submit"><%= photo ? 'Modifier' : 'Ajouter' %></button>
+        </div>
+    </form>
+</body>
+</html>
+
